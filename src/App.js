@@ -2,12 +2,13 @@ import github from "./db.js";
 import query from "./Query";
 import { useEffect, useState, useCallback } from "react";
 import RepoInfo from './RepoInfo'
+import SearchBox from './SearchBox'
 
 function App() {
   let [userName, setUserName] = useState('');
   let [repoList, setRepoList] = useState(null);
   let [pageCount, setPageCount] = useState(10);
-  let [queryString, setQueryString] = useState('javascript');
+  let [queryString, setQueryString] = useState('');
   let [totalCount, setTotalCount] = useState(null);
   
   const fetchData = useCallback(() => {
@@ -41,9 +42,13 @@ function App() {
     <div className="App container mt-5">
       <h1 className="text-primary"><i className="bi bi-diagram-2-fill"></i> Repos</h1>
       <p>Hey there {userName}</p>
-      <p>
-        <b>Search for: </b> {queryString} |  <b>Items per page: </b> {pageCount} |  <b>Total results: </b> {totalCount} 
-      </p>
+      <SearchBox
+        pageCount={pageCount}
+        totalCount={totalCount}
+        queryString={queryString}
+        onQueryChange={(myString) => {setQueryString(myString)}}
+        onTotalChange={(myTotal) => {setPageCount(myTotal)}}
+       />
       {
         repoList && (
           <ul className="list-group list-group-flush">
