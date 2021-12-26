@@ -3,12 +3,18 @@ const githubQuery = {
     {
       viewer {
         name
-        repositories(first: 10) {
-          nodes {
+      }
+      search(query: "user:d48 sort:updated-desc", type: REPOSITORY, first: 20) {
+        nodes {
+          ... on Repository {
             name
             description
             id
             url
+            viewerSubscription
+            licenseInfo {
+              spdxId
+            }
           }
         }
       }

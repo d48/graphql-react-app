@@ -1,6 +1,7 @@
 import github from "./db.js";
 import query from "./Query";
 import { useEffect, useState, useCallback } from "react";
+import RepoInfo from './RepoInfo'
 
 function App() {
   let [userName, setUserName] = useState('');
@@ -17,8 +18,9 @@ function App() {
     })
     .then(data => {
       const viewer = data.data.viewer
+      const repos = data.data.search.nodes
       setUserName(viewer.name);
-      setRepoList(viewer.repositories.nodes);
+      setRepoList(repos);
     })
     .catch(err => console.log(err))
   }, [])
@@ -36,13 +38,7 @@ function App() {
           <ul className="list-group list-group-flush">
             {
               repoList.map(repo => (
-
-                <li className="list-group-item mt-2" key={repo.id.toString()}>
-                  <a className="h5 mb-0 text-decoration-none" href={repo.url}>
-                  {repo.name}
-                  </a>
-                  <p className="small">{repo.description}</p>
-                </li>
+                <RepoInfo key={repo.id} repo={repo} />
               ))
             }
           </ul>
