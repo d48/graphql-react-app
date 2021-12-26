@@ -6,6 +6,11 @@ This goes through tutorial found in LinkedIn Learning for creating a GraphQL pro
 
 Note: to follow along, a `src/db.js` file needs to be created with a Github Developer API token
 
+## Screenshot
+
+![img](https://i.imgur.com/2498PO4.png)
+
+
 ## Available Scripts
 
 In the project directory, you can run:
