@@ -3,6 +3,7 @@ import query from "./Query";
 import { useEffect, useState, useCallback } from "react";
 import RepoInfo from './RepoInfo'
 import SearchBox from './SearchBox'
+import NavButtons from './NavButtons'
 
 function App() {
   let [userName, setUserName] = useState('');
@@ -65,6 +66,17 @@ function App() {
         queryString={queryString}
         onQueryChange={(myString) => {setQueryString(myString)}}
         onTotalChange={(myTotal) => {setPageCount(myTotal)}}
+       />
+
+       <NavButtons 
+        start={startCursor}  
+        end={endCursor}
+        next={hasNextPage}
+        previous={hasPreviousPage}
+        onPage={(myKeyword, myString) => {
+          setPaginationKeyword(myKeyword);
+          setPaginationString(myString);
+        }}
        />
       {
         repoList && (
