@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+This goes through tutorial found in LinkedIn Learning for creating a GraphQL project with React: https://github.com/LinkedInLearning/react-graphql-2875095
+
+Note: to follow along, a `src/db.js` file needs to be created with a Github Developer API token
+
 ## Available Scripts
 
 In the project directory, you can run:
