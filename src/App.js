@@ -1,11 +1,12 @@
 import github from "./db.js";
 import query from "./Query";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 function App() {
   let [userName, setUserName] = useState('');
-
-  useEffect(() => {
+  let [repoList, setRepoList] = useState(null);
+  
+  const fetchData = useCallback(() => {
     fetch(github.baseURL, {
       method: "POST",
       headers: github.headers,
@@ -15,16 +16,38 @@ function App() {
       return response.json()
     })
     .then(data => {
-      console.log(data)
-      setUserName(data.data.viewer.name);
+      const viewer = data.data.viewer
+      setUserName(viewer.name);
+      setRepoList(viewer.repositories.nodes);
     })
     .catch(err => console.log(err))
-  })
+  }, [])
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData])
 
   return (
     <div className="App container mt-5">
       <h1 className="text-primary"><i className="bi bi-diagram-2-fill"></i> Repos</h1>
       <p>Hey there {userName}</p>
+      {
+        repoList && (
+          <ul className="list-group list-group-flush">
+            {
+              repoList.map(repo => (
+
+                <li className="list-group-item mt-2" key={repo.id.toString()}>
+                  <a className="h5 mb-0 text-decoration-none" href={repo.url}>
+                  {repo.name}
+                  </a>
+                  <p className="small">{repo.description}</p>
+                </li>
+              ))
+            }
+          </ul>
+        )
+      }
     </div>
   );
 }
